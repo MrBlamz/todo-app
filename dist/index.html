@@ -29,17 +29,23 @@
 
     <div class="content">
       <div class="sidebar">
-        <h2 id="title">Todo List</h2>
+        <h2 class="sidebar-title">Todo List</h2>
 
         <div class="lists-container">
-          <header id="lists-container-header">
-            <h2 id="lists-title">Lists</h2>
+          <header class="lists-container-header">
+            <h2 class="lists-title">Lists</h2>
           </header>
 
           <div class="lists">
             <!-- Example list Element - To be created dynamically -->
             <div class="list">
-              <span class="list-name">Test</span>
+              <p class="list-name">Test</p>
+              <button class="delete-list-btn">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="list">
+              <p class="list-name">Test</p>
               <button class="delete-list-btn">
                 <i class="fas fa-times"></i>
               </button>
@@ -54,7 +60,44 @@
           </div>
         </div>
       </div>
-      <div class="list-view"></div>
+
+      <div class="list-view">
+        <header class="list-view-header">
+          <span class="list-view-icon">
+            <i class="fas fa-clipboard-list"></i>
+          </span>
+          <h2 class="list-view-name">Chores</h2>
+          <p class="list-todos-remaining-counter">0 todos remaining</p>
+        </header>
+
+        <div class="todo-container">
+          <!-- Example todo Element - To be created dynamically -->
+          <div class="todo">
+            <div class="todo-info-container">
+              <p class="todo-name">Clean room</p>
+            </div>
+
+            <div class="due-date-container">
+              <p class="due-date">19-06-2021</p>
+            </div>
+
+            <div class="todo-btn-container">
+              <button class="edit-todo-btn">
+                <i class="fas fa-pencil-alt"></i>
+              </button>
+              <button class="delete-todo-btn">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="toggle-todo-form-btn-container">
+          <button class="toggle-todo-form-btn">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </div>
     </div>
 
     <script src="main.js"></script>
