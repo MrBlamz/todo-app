@@ -9,6 +9,7 @@
 
 :root {
   --main-color: #fb9300;
+  --secondary-color: #343f56;
 }
 /* Hide Scrollbar on Chrome */
 ::-webkit-scrollbar {
@@ -91,7 +92,7 @@ button {
   overflow: hidden;
 }
 
-.sidebar #title {
+.sidebar .sidebar-title {
   padding: 1rem;
   font-size: 2rem;
   font-weight: 700;
@@ -106,18 +107,26 @@ button {
   overflow-y: auto;
 }
 
-.lists-container #lists-container-header {
+.lists-container .lists-container-header {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.sidebar .lists {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .lists-container .list {
-  width: 250px;
+  width: 85%;
   background-color: var(--main-color);
   border: 1px solid #000;
   border-radius: 1rem;
-  margin: 1.5rem 1.5rem 0 1.5rem;
+  margin: 1rem 1.5rem 0 1.5rem;
+  padding: 0.5rem;
   font-size: 1.5rem;
   cursor: pointer;
   display: flex;
@@ -126,26 +135,25 @@ button {
 }
 
 .lists-container .list:hover {
-  background-color: #343f56;
+  background-color: var(--secondary-color);
   color: #fff;
 }
 
-.lists-container .list:hover .delete-list-btn {
-  color: #fff;
+.list .list-name {
+  margin-left: 1rem;
 }
 
-.lists-container .list .list-name {
-  margin-left: auto;
-}
-
-.lists-container .list .delete-list-btn {
+.list .delete-list-btn {
   font-size: 1rem;
   margin-left: auto;
   margin-right: 0.8rem;
+  opacity: 0;
+  transition: 0.2s;
+  color: #fff;
 }
 
-.lists-container .list .delete-list-btn:hover {
-  color: #000;
+.list:hover .delete-list-btn {
+  opacity: 1;
 }
 
 .lists-container .add-list-input-container {
@@ -153,12 +161,13 @@ button {
   justify-content: center;
   border: 1px solid #000;
   border-radius: 1rem;
+  padding: 0.2rem;
   margin: 1.5rem 1.5rem 1.5rem 1.5rem;
   background-color: var(--main-color);
   width: 250px;
 }
 
-.lists-container .add-list-input-container #add-list-input {
+.add-list-input-container #add-list-input {
   font-size: 1.3rem;
   padding: 0.3rem 0;
   border: none;
@@ -166,17 +175,90 @@ button {
   background-color: inherit;
 }
 
-.lists-container .add-list-input-container #add-list-input::placeholder {
+.add-list-input-container #add-list-input::placeholder {
   color: black;
   opacity: 0.7;
 }
 
-.lists-container .add-list-input-container #add-list-btn {
+.add-list-input-container #add-list-btn {
   font-size: 1rem;
 }
 
-.lists-container .add-list-input-container #add-list-btn:hover {
+.add-list-input-container #add-list-btn:hover {
   color: blue;
+}
+
+.list-view {
+  background-color: var(--secondary-color);
+  height: 100%;
+  width: 100%;
+  padding: 2rem 4rem;
+  overflow-y: auto;
+  color: #fafafa;
+}
+
+.list-view .list-view-header {
+  display: flex;
+  align-items: center;
+  padding-bottom: 1rem;
+}
+
+.list-view-header .list-view-icon {
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
+.list-view-header .list-view-name {
+  font-size: 2rem;
+}
+
+.list-view-header .list-todos-remaining-counter {
+  font-size: 1.5rem;
+  margin-left: auto;
+}
+
+.list-view .todo-container .todo {
+  display: flex;
+  align-items: center;
+  background-color: #fafafa;
+  color: #000;
+  font-size: 1.5rem;
+  padding: 1rem;
+  border-radius: 20px;
+  margin: 1rem 0;
+}
+
+.todo-container .todo:hover {
+  cursor: pointer;
+  background-color: var(--main-color);
+}
+
+.todo .due-date-container {
+  margin-left: auto;
+  margin-right: 0.5rem;
+}
+
+.todo .todo-btn-container {
+  display: flex;
+}
+
+.todo .todo-btn-container button {
+  font-size: 1rem;
+  padding: 0.5rem;
+}
+
+.list-view .toggle-todo-form-btn-container {
+  border: 1px solid #000;
+  border-radius: 50%;
+  background-color: var(--main-color);
+  width: fit-content;
+  margin-top: 2rem;
+}
+
+.toggle-todo-form-btn-container .toggle-todo-form-btn {
+  font-size: 1.5rem;
+  width: 50px;
+  height: 50px;
 }
 
 @media (max-width: 480px) {
@@ -193,7 +275,37 @@ button {
   }
 
   /* TODO - Set display none when sidebar is active on mobile */
-  .content .list-view {
+  .list-view {
     display: none;
+  }
+
+  .list-view.active {
+    display: block;
+  }
+
+  .lists-container .list .delete-list-btn {
+    opacity: 1;
+    color: #000;
+  }
+
+  .list-view {
+    padding: 1rem;
+  }
+
+  .list-view .list-view-header {
+    padding: 0.5rem 0 1rem 0;
+  }
+
+  .list-view-header .list-view-icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+  }
+
+  .list-view-header .list-view-name {
+    font-size: 1.5rem;
+  }
+
+  .todo .todo-btn-container button {
+    opacity: 1;
   }
 }
