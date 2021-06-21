@@ -30,12 +30,17 @@ button {
   border: none;
 }
 
+.blurred {
+  filter: blur(3px);
+}
+
 .top-bar {
   background-color: var(--main-color);
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0.4rem;
+  transition: 0.3s;
 }
 
 .top-bar #sidebar-btn {
@@ -79,6 +84,7 @@ button {
   height: calc(100% - 48.38px);
   display: flex;
   overflow: hidden;
+  transition: 0.3s;
 }
 
 .content .sidebar {
@@ -270,7 +276,14 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  display: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.todo-overview-container.active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .todo-overview {
@@ -310,7 +323,14 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  display: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.todo-form-container.active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .todo-form {
