@@ -170,7 +170,7 @@ button {
   padding: 0.2rem;
   margin: 1.5rem 1.5rem 1.5rem 1.5rem;
   background-color: var(--main-color);
-  width: 250px;
+  width: 80%;
 }
 
 .add-list-input-container #add-list-input {
@@ -257,7 +257,7 @@ button {
   border: 1px solid #000;
   border-radius: 50%;
   background-color: var(--main-color);
-  width: fit-content;
+  width: max-content;
   margin-top: 2rem;
 }
 
@@ -335,7 +335,6 @@ button {
 
 .todo-form {
   position: relative;
-  height: 95%;
   width: 30%;
   display: flex;
   flex-direction: column;
