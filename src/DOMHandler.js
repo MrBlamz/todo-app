@@ -1,10 +1,24 @@
 import PubSub from "pubsub-js";
-import { todoFormContainer, contentContainer, topBar } from "./DOMElements";
+import {
+  todoFormContainer,
+  contentContainer,
+  topBar,
+  sideBar,
+} from "./DOMElements";
 
 const DOMHandler = (function () {
   function init() {
+    toggleSidebar();
     openNewTodoForm();
     closeTodoForm();
+  }
+
+  function toggleSidebar() {
+    const TOPIC = "toggleSidebar";
+
+    PubSub.subscribe(TOPIC, () => {
+      toggleElementClass(sideBar, "active");
+    });
   }
 
   function openNewTodoForm() {

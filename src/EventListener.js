@@ -1,10 +1,23 @@
 import PubSub from "pubsub-js";
-import { openNewTodoFormBtn, todoFormCloseBtn } from "./DOMElements";
+import {
+  openNewTodoFormBtn,
+  todoFormCloseBtn,
+  toggleSidebarBtn,
+} from "./DOMElements";
 
 const EventListener = (function () {
   function init() {
+    toggleSidebarBtnClicked();
     openNewTodoFormBtnClicked();
     todoFormCloseBtnClicked();
+  }
+
+  function toggleSidebarBtnClicked() {
+    const TOPIC = "toggleSidebar";
+
+    toggleSidebarBtn.addEventListener("click", () => {
+      PubSub.publish(TOPIC);
+    });
   }
 
   function openNewTodoFormBtnClicked() {
