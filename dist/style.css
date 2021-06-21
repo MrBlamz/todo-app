@@ -261,6 +261,45 @@ button {
   height: 50px;
 }
 
+.todo-view-background {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+
+.todo-view {
+  padding: 1rem;
+  border: 1px solid var(--main-color);
+  border-radius: 10px;
+  width: 50%;
+  background-color: #fff;
+}
+
+.todo-view-close-btn-container {
+  float: right;
+  position: relative;
+  bottom: 10px;
+}
+
+.todo-view-close-btn {
+  font-size: 1.3rem;
+}
+
+.todo-view-info p {
+  padding: 0.2rem 0;
+  font-size: 1.1rem;
+}
+
+.todo-view-info-name {
+  font-size: 2rem;
+  margin-bottom: 0.3rem;
+}
+
 @media (max-width: 480px) {
   .top-bar #sidebar-btn {
     display: block;
@@ -307,5 +346,9 @@ button {
 
   .todo .todo-btn-container button {
     opacity: 1;
+  }
+
+  .todo-view {
+    width: 90%;
   }
 }
