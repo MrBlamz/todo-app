@@ -247,7 +247,7 @@ button {
   padding: 0.5rem;
 }
 
-.list-view .toggle-todo-form-btn-container {
+.list-view .open-new-todo-form-btn-container {
   border: 1px solid #000;
   border-radius: 50%;
   background-color: var(--main-color);
@@ -255,24 +255,25 @@ button {
   margin-top: 2rem;
 }
 
-.toggle-todo-form-btn-container .toggle-todo-form-btn {
+.open-new-todo-form-btn-container .open-new-todo-form-btn {
   font-size: 1.5rem;
   width: 50px;
   height: 50px;
 }
 
-.todo-view-background {
+.todo-overview-container {
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   display: none;
 }
 
-.todo-view {
+.todo-overview {
   padding: 1rem;
   border: 1px solid var(--main-color);
   border-radius: 10px;
@@ -280,24 +281,103 @@ button {
   background-color: #fff;
 }
 
-.todo-view-close-btn-container {
+.todo-overview-close-btn-container {
   float: right;
   position: relative;
   bottom: 10px;
 }
 
-.todo-view-close-btn {
+.todo-overview-close-btn {
   font-size: 1.3rem;
 }
 
-.todo-view-info p {
+.todo-overview-info p {
   padding: 0.2rem 0;
   font-size: 1.1rem;
 }
 
-.todo-view-info-name {
+.todo-overview-info-name {
   font-size: 2rem;
   margin-bottom: 0.3rem;
+}
+
+.todo-form-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+
+.todo-form {
+  position: relative;
+  height: 95%;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border: 1px solid var(--main-color);
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.todo-form .todo-form-close-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 1.3rem;
+}
+
+.todo-form h2 {
+  align-self: center;
+  font-size: 3rem;
+  padding-bottom: 0.5rem;
+}
+
+.todo-form label {
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.todo-form input {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(238, 238, 238);
+  font-size: 1.1rem;
+  outline: none;
+}
+
+.todo-form select {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(238, 238, 238);
+  font-size: 1.1rem;
+  outline: none;
+}
+
+.todo-form textarea {
+  background-color: rgb(238, 238, 238);
+  border-radius: 5px;
+  border: none;
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  outline: none;
+}
+
+.todo-form .todo-form-submit-btn {
+  font-size: 1.3rem;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 0.5rem;
+  margin-top: 1rem;
 }
 
 @media (max-width: 480px) {
@@ -348,7 +428,12 @@ button {
     opacity: 1;
   }
 
-  .todo-view {
-    width: 90%;
+  .todo-overview {
+    width: 95%;
+  }
+
+  .todo-form {
+    width: 95%;
+    height: auto;
   }
 }

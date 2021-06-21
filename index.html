@@ -86,29 +86,50 @@
           </div>
         </div>
 
-        <div class="toggle-todo-form-btn-container">
-          <button class="toggle-todo-form-btn">
+        <div class="open-new-todo-form-btn-container">
+          <button class="open-new-todo-form-btn">
             <i class="fas fa-plus"></i>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Example todo view - To be generated dynamically when user clicks on todo -->
-    <div class="todo-view-background">
-      <div class="todo-view">
-        <div class="todo-view-close-btn-container">
-          <button class="todo-view-close-btn">
-            <i class="far fa-times-circle"></i>
+    <div class="todo-overview-container">
+      <div class="todo-overview">
+        <div class="todo-overview-close-btn-container">
+          <button class="todo-overview-close-btn">
+            <i class="fas fa-times"></i>
           </button>
         </div>
-        <div class="todo-view-info">
-          <h2 class="todo-view-info-name">Test</h2>
-          <p class="todo-view-info-date">Due: 19-06-2021</p>
-          <p class="todo-view-info-project">Project: Chores</p>
-          <p class="todo-view-info-notes">Notes: None</p>
+        <div class="todo-overview-info">
+          <h2 class="todo-overview-info-name">Test</h2>
+          <p class="todo-overview-info-date">Due: 19-06-2021</p>
+          <p class="todo-overview-info-project">Project: Chores</p>
+          <p class="todo-overview-info-notes">Notes: None</p>
         </div>
       </div>
+    </div>
+
+    <div class="todo-form-container">
+      <form class="todo-form">
+        <button class="todo-form-close-btn" type="button">
+          <i class="fas fa-times"></i>
+        </button>
+        <h2 class="todo-form-title">New Todo</h2>
+        <label for="todo-name">Todo name:</label>
+        <input type="text" id="todo-name" required />
+        <label for="todo-date">Due date:</label>
+        <input type="date" id="todo-date" />
+        <label for="todo-priority">Priority:</label>
+        <select name="priority" id="todo-priority">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+        <label for="todo-notes">Notes:</label>
+        <textarea id="todo-notes" cols="30" rows="10"></textarea>
+        <button class="todo-form-submit-btn" type="submit">Submit</button>
+      </form>
     </div>
 
     <script src="main.js"></script>
