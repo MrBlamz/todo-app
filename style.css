@@ -43,7 +43,7 @@ button {
   transition: 0.3s;
 }
 
-.top-bar #sidebar-btn {
+.top-bar .toggle-sidebar-btn {
   display: none;
   padding: 0 0.8rem;
   cursor: pointer;
@@ -400,7 +400,12 @@ button {
 }
 
 @media (max-width: 480px) {
-  .top-bar #sidebar-btn {
+  .top-bar {
+    position: relative;
+    z-index: 100;
+  }
+
+  .top-bar .toggle-sidebar-btn {
     display: block;
   }
 
@@ -408,17 +413,26 @@ button {
     width: 100%;
   }
 
+  /* Start minimized by default */
   .content .sidebar {
+    position: fixed;
+    overflow: auto;
+    top: 0;
+    left: -500px;
     width: 100vw;
+    opacity: 0;
+    z-index: 10;
+    transition: all 350ms cubic-bezier(0.6, 0.05, 0.28, 0.91);
   }
 
-  /* TODO - Set display none when sidebar is active on mobile */
-  .list-view {
-    display: none;
+  /* Fill entire viewport when active */
+  .content .sidebar.active {
+    left: 0px;
+    opacity: 1;
   }
 
-  .list-view.active {
-    display: block;
+  .sidebar .sidebar-title {
+    margin-top: 2em;
   }
 
   .lists-container .list .delete-list-btn {
@@ -427,6 +441,7 @@ button {
   }
 
   .list-view {
+    width: 100%;
     padding: 1rem;
   }
 
