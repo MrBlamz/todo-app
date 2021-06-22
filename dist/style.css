@@ -418,6 +418,7 @@ button {
     position: fixed;
     overflow: auto;
     top: 0;
+    bottom: 0;
     left: -500px;
     width: 100vw;
     opacity: 0;
