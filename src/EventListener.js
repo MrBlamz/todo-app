@@ -3,11 +3,14 @@ import {
   openNewTodoFormBtn,
   todoFormCloseBtn,
   toggleSidebarBtn,
+  addListInputContainer,
+  addListBtn,
 } from "./DOMElements";
 
 const EventListener = (function () {
   function init() {
     toggleSidebarBtnClicked();
+    newListNameInputted();
     openNewTodoFormBtnClicked();
     todoFormCloseBtnClicked();
   }
@@ -17,6 +20,23 @@ const EventListener = (function () {
 
     toggleSidebarBtn.addEventListener("click", () => {
       PubSub.publish(TOPIC);
+    });
+  }
+
+  function newListNameInputted() {
+    const TOPIC = "newListNameInputted";
+
+    addListBtn.addEventListener("click", () => {
+      PubSub.publish(TOPIC);
+    });
+
+    addListInputContainer.addEventListener("keydown", (event) => {
+      const isElement = isDesiredElement(event.target, "add-list-input");
+      const isKey = isDesiredKey(event.key, "Enter");
+
+      if (isElement && isKey) {
+        PubSub.publish(TOPIC);
+      }
     });
   }
 
@@ -34,6 +54,15 @@ const EventListener = (function () {
     todoFormCloseBtn.addEventListener("click", () => {
       PubSub.publish(TOPIC);
     });
+  }
+
+  // Helper functions
+  function isDesiredElement(element, string) {
+    return element.classList.contains(string);
+  }
+
+  function isDesiredKey(pressedKey, targetKey) {
+    return pressedKey === targetKey;
   }
 
   return {
