@@ -4,7 +4,18 @@ const Todo = function (name, dueDate, priority, notes) {
   const _priority = priority;
   const _notes = notes;
 
-  return {};
+  function getName() {
+    return _name;
+  }
+
+  function getDueDate() {
+    return _dueDate;
+  }
+
+  return {
+    getName,
+    getDueDate,
+  };
 };
 
 export default Todo;

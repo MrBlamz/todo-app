@@ -3,6 +3,7 @@ export const topBar = document.querySelector(".top-bar");
 export const sideBar = document.querySelector(".sidebar");
 export const toggleSidebarBtn = document.querySelector(".toggle-sidebar-btn");
 export const listsContainer = document.querySelector(".lists");
+export const todoContainer = document.querySelector(".todo-container");
 export const openNewTodoFormBtn = document.querySelector(
   ".open-new-todo-form-btn"
 );

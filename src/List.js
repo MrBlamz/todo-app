@@ -12,9 +12,14 @@ const List = function (name) {
     return _name;
   }
 
+  function getTodos() {
+    return _todos;
+  }
+
   return {
     addTodo,
     getName,
+    getTodos,
   };
 };
 

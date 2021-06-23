@@ -17,3 +17,53 @@ export const createList = function (name) {
 
   return list;
 };
+
+export const createTodo = function (name, dueDate) {
+  const todo = createContainer("todo");
+
+  const infoContainer = createContainer("todo-info-container");
+  const todoName = createParagraph("todo-name", name);
+  infoContainer.appendChild(todoName);
+
+  const dateContainer = createContainer("due-date-container");
+  const todoDate = createParagraph("due-date", dueDate);
+  dateContainer.appendChild(todoDate);
+
+  const buttonsContainer = createContainer("todo-btn-container");
+  const editBtn = createButton("edit-todo-btn");
+  const editBtnIcon = createI("fas", "fa-pencil-alt");
+  editBtn.appendChild(editBtnIcon);
+  const deleteBtn = createButton("delete-todo-btn");
+  const deleteBtnIcon = createI("fas", "fa-trash");
+  deleteBtn.appendChild(deleteBtnIcon);
+  buttonsContainer.append(editBtn, deleteBtn);
+
+  todo.append(infoContainer, dateContainer, buttonsContainer);
+  return todo;
+};
+
+// Helper functions
+function createContainer(className) {
+  const container = document.createElement("div");
+  container.classList.add(className);
+  return container;
+}
+
+function createParagraph(className, content) {
+  const p = document.createElement("p");
+  p.classList.add(className);
+  p.textContent = content;
+  return p;
+}
+
+function createButton(...className) {
+  const button = document.createElement("button");
+  className.forEach((name) => button.classList.add(name));
+  return button;
+}
+
+function createI(...className) {
+  const i = document.createElement("i");
+  className.forEach((name) => i.classList.add(name));
+  return i;
+}

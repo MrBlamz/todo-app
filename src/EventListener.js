@@ -10,9 +10,12 @@ import {
 
 const EventListener = (function () {
   function init() {
+    // Sidebar
     toggleSidebarBtnClicked();
     newListNameInputted();
     deleteListBtnClicked();
+    listClicked();
+    // List View
     openNewTodoFormBtnClicked();
     todoFormCloseBtnClicked();
   }
@@ -49,6 +52,18 @@ const EventListener = (function () {
       const isButton = isDesiredElement(event.target, "delete-list-btn");
 
       if (isButton) {
+        PubSub.publish(TOPIC, event);
+      }
+    });
+  }
+
+  function listClicked() {
+    const TOPIC = "listClicked";
+
+    listsContainer.addEventListener("click", (event) => {
+      const isList = isDesiredElement(event.target, "list");
+
+      if (isList) {
         PubSub.publish(TOPIC, event);
       }
     });

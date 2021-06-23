@@ -5,6 +5,7 @@ const DOMPropertiesGetter = (function () {
   function init() {
     getNewListName();
     getDeletedListName();
+    getClickedListName();
   }
 
   function getNewListName() {
@@ -26,6 +27,16 @@ const DOMPropertiesGetter = (function () {
       const listElement = event.target.parentElement;
       const NEW_TOPIC = "deleteList";
       PubSub.publish(NEW_TOPIC, { listName, listElement });
+    });
+  }
+
+  function getClickedListName() {
+    const TOPIC = "listClicked";
+
+    PubSub.subscribe(TOPIC, (msg, event) => {
+      const listName = event.target.textContent;
+      const NEW_TOPIC = "getList";
+      PubSub.publish(NEW_TOPIC, listName);
     });
   }
 

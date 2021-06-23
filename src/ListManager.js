@@ -7,6 +7,7 @@ const ListManager = (function () {
   function init() {
     addList();
     deleteList();
+    getList();
   }
 
   function addList() {
@@ -38,6 +39,21 @@ const ListManager = (function () {
           const NEW_TOPIC = "listDeleted";
           PubSub.publish(NEW_TOPIC, data);
           break;
+        }
+      }
+    });
+  }
+
+  function getList() {
+    const TOPIC = "getList";
+
+    PubSub.subscribe(TOPIC, (msg, listName) => {
+      for (let i = 0; i < _lists.length; i++) {
+        if (_lists[i].getName() === listName) {
+          const list = _lists[i];
+          const NEW_TOPIC = "listFound";
+          PubSub.publish(NEW_TOPIC, list);
+          return;
         }
       }
     });

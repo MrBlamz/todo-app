@@ -6,8 +6,9 @@ import {
   sideBar,
   listsContainer,
   newListNameInput,
+  todoContainer,
 } from "./DOMElements";
-import { createList } from "./DOMElementCreator";
+import { createList, createTodo } from "./DOMElementCreator";
 
 const DOMHandler = (function () {
   function init() {
@@ -17,6 +18,7 @@ const DOMHandler = (function () {
     addListToSidebar();
     deleteListFromSidebar();
     clearNewListInput();
+    renderList();
     openNewTodoForm();
     closeTodoForm();
   }
@@ -74,6 +76,19 @@ const DOMHandler = (function () {
     });
   }
 
+  function renderList() {
+    const TOPIC = "listFound";
+
+    PubSub.subscribe(TOPIC, (msg, list) => {
+      clearTodoContainer();
+
+      list.getTodos().forEach((todo) => {
+        const t = createTodo(todo.getName(), todo.getDueDate());
+        todoContainer.appendChild(t);
+      });
+    });
+  }
+
   function openNewTodoForm() {
     const TOPIC = "openNewTodoForm";
 
@@ -93,6 +108,10 @@ const DOMHandler = (function () {
   }
 
   // Helper functions
+  function clearTodoContainer() {
+    todoContainer.innerHTML = "";
+  }
+
   function clearInput(element) {
     element.value = "";
   }
