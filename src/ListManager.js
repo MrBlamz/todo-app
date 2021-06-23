@@ -7,7 +7,8 @@ const ListManager = (function () {
   function init() {
     addList();
     deleteList();
-    getList();
+    fetchList();
+    addTodoToList();
   }
 
   function addList() {
@@ -44,22 +45,50 @@ const ListManager = (function () {
     });
   }
 
-  function getList() {
-    const TOPIC = "getList";
+  function fetchList() {
+    const TOPIC = "fetchList";
 
     PubSub.subscribe(TOPIC, (msg, listName) => {
-      for (let i = 0; i < _lists.length; i++) {
-        if (_lists[i].getName() === listName) {
-          const list = _lists[i];
-          const NEW_TOPIC = "listFound";
-          PubSub.publish(NEW_TOPIC, list);
-          return;
-        }
+      const list = getList(listName);
+      const NEW_TOPIC = "listFound";
+      PubSub.publish(NEW_TOPIC, list);
+    });
+  }
+
+  function addTodoToList() {
+    const TOPIC = "addTodo";
+
+    PubSub.subscribe(TOPIC, (msg, data) => {
+      const listName = data.listName;
+      const list = getList(listName);
+      const isUnavailable = list.contains(data.form.name);
+      let NEW_TOPIC;
+
+      if (isUnavailable) {
+        NEW_TOPIC = "TodoNameUnavailable";
+      } else {
+        list.addTodo(
+          data.form.name,
+          data.form.dueDate,
+          data.form.priority,
+          data.form.notes
+        );
+        NEW_TOPIC = "todoAdded";
       }
+
+      PubSub.publish(NEW_TOPIC, data);
     });
   }
 
   // Helper functions
+  function getList(name) {
+    for (let i = 0; i < _lists.length; i++) {
+      if (_lists[i].getName() === name) {
+        return _lists[i];
+      }
+    }
+  }
+
   function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }

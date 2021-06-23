@@ -16,10 +16,16 @@ const List = function (name) {
     return _todos;
   }
 
+  function contains(name) {
+    const result = _todos.filter((todo) => todo.getName() === name);
+    return result.length === 0 ? false : true;
+  }
+
   return {
     addTodo,
     getName,
     getTodos,
+    contains,
   };
 };
 

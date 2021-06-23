@@ -6,6 +6,7 @@ import {
   addListInputContainer,
   addListBtn,
   listsContainer,
+  todoFormSubmitBtn,
 } from "./DOMElements";
 
 const EventListener = (function () {
@@ -18,6 +19,7 @@ const EventListener = (function () {
     // List View
     openNewTodoFormBtnClicked();
     todoFormCloseBtnClicked();
+    todoFormSubmitBtnClicked();
   }
 
   function toggleSidebarBtnClicked() {
@@ -82,6 +84,22 @@ const EventListener = (function () {
 
     todoFormCloseBtn.addEventListener("click", () => {
       PubSub.publish(TOPIC);
+    });
+  }
+
+  function todoFormSubmitBtnClicked() {
+    const TOPIC = "todoFormSubmitBtnClicked";
+
+    window.addEventListener("submit", (event) => {
+      const isSubmitFormButton = isDesiredElement(
+        event.submitter,
+        "todo-form-submit-btn"
+      );
+
+      if (isSubmitFormButton) {
+        event.preventDefault();
+        PubSub.publish(TOPIC);
+      }
     });
   }
 

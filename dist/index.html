@@ -60,27 +60,7 @@
           <p class="list-todos-remaining-counter">0 todos remaining</p>
         </header>
 
-        <div class="todo-container">
-          <!-- Example todo Element - To be created dynamically -->
-          <div class="todo">
-            <div class="todo-info-container">
-              <p class="todo-name">Clean room</p>
-            </div>
-
-            <div class="due-date-container">
-              <p class="due-date">19-06-2021</p>
-            </div>
-
-            <div class="todo-btn-container">
-              <button class="edit-todo-btn">
-                <i class="fas fa-pencil-alt"></i>
-              </button>
-              <button class="delete-todo-btn">
-                <i class="fas fa-trash"></i>
-              </button>
-            </div>
-          </div>
-        </div>
+        <div class="todo-container"></div>
 
         <div class="open-new-todo-form-btn-container">
           <button class="open-new-todo-form-btn">
@@ -115,7 +95,7 @@
         <label for="todo-name">Todo name:</label>
         <input type="text" id="todo-name" required />
         <label for="todo-date">Due date:</label>
-        <input type="date" id="todo-date" />
+        <input type="date" id="todo-date" required />
         <label for="todo-priority">Priority:</label>
         <select name="priority" id="todo-priority">
           <option value="low">Low</option>

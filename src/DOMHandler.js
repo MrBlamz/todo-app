@@ -7,6 +7,7 @@ import {
   listsContainer,
   newListNameInput,
   todoContainer,
+  todoForm,
 } from "./DOMElements";
 import { createList, createTodo } from "./DOMElementCreator";
 
@@ -21,6 +22,8 @@ const DOMHandler = (function () {
     renderList();
     openNewTodoForm();
     closeTodoForm();
+    renderTodo();
+    resetTodoForm();
   }
 
   function toggleSidebar() {
@@ -104,6 +107,27 @@ const DOMHandler = (function () {
     PubSub.subscribe(TOPIC, () => {
       toggleElementClass(todoFormContainer, "active");
       blurBackground();
+    });
+  }
+
+  function renderTodo() {
+    const TOPIC = "todoAdded";
+
+    PubSub.subscribe(TOPIC, (msg, data) => {
+      const todo = createTodo(data.form.name, data.form.dueDate);
+      todoContainer.appendChild(todo);
+      const NEW_TOPIC = "resetForm";
+      const SECOND_TOPIC = "closeTodoForm";
+      PubSub.publish(NEW_TOPIC);
+      PubSub.publish(SECOND_TOPIC);
+    });
+  }
+
+  function resetTodoForm() {
+    const TOPIC = "resetForm";
+
+    PubSub.subscribe(TOPIC, () => {
+      todoForm.reset();
     });
   }
 

@@ -1,11 +1,19 @@
 import PubSub from "pubsub-js";
-import { newListNameInput } from "./DOMElements";
+import {
+  listViewName,
+  newListNameInput,
+  todoFormDateInput,
+  todoFormNameInput,
+  todoFormNotesInput,
+  todoFormPriorityInput,
+} from "./DOMElements";
 
 const DOMPropertiesGetter = (function () {
   function init() {
     getNewListName();
     getDeletedListName();
     getClickedListName();
+    getTodoFormValue();
   }
 
   function getNewListName() {
@@ -35,8 +43,25 @@ const DOMPropertiesGetter = (function () {
 
     PubSub.subscribe(TOPIC, (msg, event) => {
       const listName = event.target.textContent;
-      const NEW_TOPIC = "getList";
+      const NEW_TOPIC = "fetchList";
       PubSub.publish(NEW_TOPIC, listName);
+    });
+  }
+
+  function getTodoFormValue() {
+    const TOPIC = "todoFormSubmitBtnClicked";
+
+    PubSub.subscribe(TOPIC, () => {
+      const listName = listViewName.textContent;
+      const form = {
+        name: todoFormNameInput.value,
+        dueDate: todoFormDateInput.value,
+        priority: todoFormPriorityInput.value,
+        notes: todoFormNotesInput.value,
+      };
+
+      const NEW_TOPIC = "addTodo";
+      PubSub.publish(NEW_TOPIC, { listName, form });
     });
   }
 
