@@ -25,6 +25,7 @@ const DOMHandler = (function () {
     closeTodoForm();
     renderTodo();
     resetTodoForm();
+    alertTodoNameUnavailable();
   }
 
   function toggleSidebar() {
@@ -130,6 +131,14 @@ const DOMHandler = (function () {
 
     PubSub.subscribe(TOPIC, () => {
       todoForm.reset();
+    });
+  }
+
+  function alertTodoNameUnavailable() {
+    const TOPIC = "TodoNameUnavailable";
+
+    PubSub.subscribe(TOPIC, (msg, data) => {
+      alertNameUnavailable(data.form.name, "Todo");
     });
   }
 
