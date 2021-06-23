@@ -56,7 +56,7 @@ const ListManager = (function () {
   }
 
   function addTodoToList() {
-    const TOPIC = "addTodo";
+    const TOPIC = "todoNameValid";
 
     PubSub.subscribe(TOPIC, (msg, data) => {
       const listName = data.listName;

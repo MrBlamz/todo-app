@@ -60,7 +60,7 @@ const DOMPropertiesGetter = (function () {
         notes: todoFormNotesInput.value,
       };
 
-      const NEW_TOPIC = "addTodo";
+      const NEW_TOPIC = "validateTodoName";
       PubSub.publish(NEW_TOPIC, { listName, form });
     });
   }

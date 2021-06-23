@@ -25,6 +25,7 @@ const DOMHandler = (function () {
     closeTodoForm();
     renderTodo();
     resetTodoForm();
+    alertTodoNameInvalid();
     alertTodoNameUnavailable();
   }
 
@@ -131,6 +132,14 @@ const DOMHandler = (function () {
 
     PubSub.subscribe(TOPIC, () => {
       todoForm.reset();
+    });
+  }
+
+  function alertTodoNameInvalid() {
+    const TOPIC = "todoNameInvalid";
+
+    PubSub.subscribe(TOPIC, (msg, data) => {
+      alertNameInvalid(data.form.name, 25);
     });
   }
 
