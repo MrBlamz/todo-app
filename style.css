@@ -151,6 +151,7 @@ i {
 
 .list .list-name {
   margin-left: 1rem;
+  pointer-events: none;
 }
 
 .list .delete-list-btn {
