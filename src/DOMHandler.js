@@ -8,6 +8,7 @@ import {
   newListNameInput,
   todoContainer,
   todoForm,
+  listViewName,
 } from "./DOMElements";
 import { createList, createTodo } from "./DOMElementCreator";
 
@@ -84,6 +85,7 @@ const DOMHandler = (function () {
 
     PubSub.subscribe(TOPIC, (msg, list) => {
       clearTodoContainer();
+      updateListViewHeader(list.getName());
 
       list.getTodos().forEach((todo) => {
         const t = createTodo(todo.getName(), todo.getDueDate());
@@ -132,6 +134,10 @@ const DOMHandler = (function () {
   }
 
   // Helper functions
+  function updateListViewHeader(text) {
+    listViewName.textContent = text;
+  }
+
   function clearTodoContainer() {
     todoContainer.innerHTML = "";
   }
