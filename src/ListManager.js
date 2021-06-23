@@ -6,6 +6,7 @@ const ListManager = (function () {
 
   function init() {
     addList();
+    deleteList();
   }
 
   function addList() {
@@ -24,6 +25,21 @@ const ListManager = (function () {
       }
 
       PubSub.publish(NEW_TOPIC, capitalized);
+    });
+  }
+
+  function deleteList() {
+    const TOPIC = "deleteList";
+
+    PubSub.subscribe(TOPIC, (msg, data) => {
+      for (let i = 0; i < _lists.length; i++) {
+        if (_lists[i].getName() === data.listName) {
+          _lists.splice(i, 1);
+          const NEW_TOPIC = "listDeleted";
+          PubSub.publish(NEW_TOPIC, data);
+          break;
+        }
+      }
     });
   }
 

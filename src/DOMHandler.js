@@ -15,6 +15,7 @@ const DOMHandler = (function () {
     alertListNameInvalid();
     alertListNameUnavailable();
     addListToSidebar();
+    deleteListFromSidebar();
     clearNewListInput();
     openNewTodoForm();
     closeTodoForm();
@@ -54,6 +55,14 @@ const DOMHandler = (function () {
     PubSub.subscribe(TOPIC, (msg, name) => {
       const list = createList(name);
       listsContainer.appendChild(list);
+    });
+  }
+
+  function deleteListFromSidebar() {
+    const TOPIC = "listDeleted";
+
+    PubSub.subscribe(TOPIC, (msg, data) => {
+      listsContainer.removeChild(data.listElement);
     });
   }
 

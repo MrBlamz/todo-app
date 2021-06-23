@@ -30,6 +30,10 @@ button {
   border: none;
 }
 
+i {
+  pointer-events: none;
+}
+
 .blurred {
   filter: blur(3px);
 }

@@ -5,12 +5,14 @@ import {
   toggleSidebarBtn,
   addListInputContainer,
   addListBtn,
+  listsContainer,
 } from "./DOMElements";
 
 const EventListener = (function () {
   function init() {
     toggleSidebarBtnClicked();
     newListNameInputted();
+    deleteListBtnClicked();
     openNewTodoFormBtnClicked();
     todoFormCloseBtnClicked();
   }
@@ -31,11 +33,23 @@ const EventListener = (function () {
     });
 
     addListInputContainer.addEventListener("keydown", (event) => {
-      const isElement = isDesiredElement(event.target, "add-list-input");
+      const isInput = isDesiredElement(event.target, "add-list-input");
       const isKey = isDesiredKey(event.key, "Enter");
 
-      if (isElement && isKey) {
+      if (isInput && isKey) {
         PubSub.publish(TOPIC);
+      }
+    });
+  }
+
+  function deleteListBtnClicked() {
+    const TOPIC = "deleteListBtnClicked";
+
+    listsContainer.addEventListener("click", (event) => {
+      const isButton = isDesiredElement(event.target, "delete-list-btn");
+
+      if (isButton) {
+        PubSub.publish(TOPIC, event);
       }
     });
   }
