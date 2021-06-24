@@ -24,6 +24,7 @@ const EventListener = (function () {
     todoClicked();
     todoOverviewCloseBtnClicked();
     todoCheckboxClicked();
+    deleteTodoBtnClicked();
   }
 
   function toggleSidebarBtnClicked() {
@@ -137,6 +138,18 @@ const EventListener = (function () {
       );
 
       if (isCheckbox) {
+        PubSub.publish(TOPIC, event);
+      }
+    });
+  }
+
+  function deleteTodoBtnClicked() {
+    const TOPIC = "deleteTodoBtnClicked";
+
+    todoContainer.addEventListener("click", (event) => {
+      const isDeleteButton = isDesiredElement(event.target, "delete-todo-btn");
+
+      if (isDeleteButton) {
         PubSub.publish(TOPIC, event);
       }
     });

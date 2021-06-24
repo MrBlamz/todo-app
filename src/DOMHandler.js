@@ -23,8 +23,8 @@ const DOMHandler = (function () {
     toggleSidebar();
     alertListNameInvalid();
     alertListNameUnavailable();
-    addListToSidebar();
-    deleteListFromSidebar();
+    addList();
+    deleteList();
     clearNewListInput();
     renderList();
     openNewTodoForm();
@@ -36,6 +36,7 @@ const DOMHandler = (function () {
     renderTodoOverview();
     closeTodoOverview();
     toggleTodoCompleted();
+    deleteTodo();
   }
 
   function toggleSidebar() {
@@ -66,7 +67,7 @@ const DOMHandler = (function () {
     });
   }
 
-  function addListToSidebar() {
+  function addList() {
     const TOPIC = "listAdded";
 
     PubSub.subscribe(TOPIC, (msg, name) => {
@@ -75,7 +76,7 @@ const DOMHandler = (function () {
     });
   }
 
-  function deleteListFromSidebar() {
+  function deleteList() {
     const TOPIC = "listDeleted";
 
     PubSub.subscribe(TOPIC, (msg, data) => {
@@ -195,6 +196,14 @@ const DOMHandler = (function () {
     PubSub.subscribe(TOPIC, (msg, event) => {
       const todo = event.target.parentElement.parentElement;
       toggleElementClass(todo, "completed");
+    });
+  }
+
+  function deleteTodo() {
+    const TOPIC = "deleteTodo";
+
+    PubSub.subscribe(TOPIC, (msg, data) => {
+      todoContainer.removeChild(data.todoElement);
     });
   }
 

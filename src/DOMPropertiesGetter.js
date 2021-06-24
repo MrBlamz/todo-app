@@ -15,6 +15,7 @@ const DOMPropertiesGetter = (function () {
     getClickedListName();
     getTodoFormValue();
     getClickedTodoName();
+    getDeletedTodoName();
   }
 
   function getNewListName() {
@@ -74,6 +75,18 @@ const DOMPropertiesGetter = (function () {
       const todoName = event.target.querySelector(".todo-name").textContent;
       const NEW_TOPIC = "fetchTodo";
       PubSub.publish(NEW_TOPIC, { listName, todoName });
+    });
+  }
+
+  function getDeletedTodoName() {
+    const TOPIC = "deleteTodoBtnClicked";
+
+    PubSub.subscribe(TOPIC, (msg, event) => {
+      const todoElement = event.target.parentElement.parentElement;
+      const listName = todoElement.getAttribute("data-list");
+      const todoName = todoElement.querySelector(".todo-name").textContent;
+      const NEW_TOPIC = "deleteTodo";
+      PubSub.publish(NEW_TOPIC, { todoElement, listName, todoName });
     });
   }
 

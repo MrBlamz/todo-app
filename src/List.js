@@ -24,6 +24,15 @@ const List = function (name) {
     return _todos;
   }
 
+  function deleteTodo(name) {
+    for (let i = 0; i < _todos.length; i++) {
+      if (_todos[i].getName() === name) {
+        _todos.splice(i, 1);
+        return;
+      }
+    }
+  }
+
   function contains(name) {
     const result = _todos.filter((todo) => todo.getName() === name);
     return result.length === 0 ? false : true;
@@ -34,6 +43,7 @@ const List = function (name) {
     getName,
     getTodo,
     getTodos,
+    deleteTodo,
     contains,
   };
 };

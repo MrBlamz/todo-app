@@ -10,6 +10,7 @@ const ListManager = (function () {
     fetchList();
     addTodoToList();
     fetchTodo();
+    deleteTodoFromList();
   }
 
   function addList() {
@@ -92,6 +93,15 @@ const ListManager = (function () {
 
       const NEW_TOPIC = "todoFound";
       PubSub.publish(NEW_TOPIC, data);
+    });
+  }
+
+  function deleteTodoFromList() {
+    const TOPIC = "deleteTodo";
+
+    PubSub.subscribe(TOPIC, (msg, data) => {
+      const list = getList(data.listName);
+      list.deleteTodo(data.todoName);
     });
   }
 
