@@ -17,11 +17,19 @@ const InputValidator = (function () {
 
   function validateTodoName() {
     const TOPIC = "validateTodoName";
+    let NEW_TOPIC;
 
     PubSub.subscribe(TOPIC, (msg, data) => {
-      const NEW_TOPIC = isValid(data.form.name, 25)
-        ? "todoNameValid"
-        : "todoNameInvalid";
+      const mode = data.mode;
+
+      if (isValid(data.form.name, 25) && mode === "New") {
+        NEW_TOPIC = "newTodoNameValid";
+      } else if (isValid(data.form.name, 25) && mode === "Edit") {
+        NEW_TOPIC = "editedNameValid";
+      } else {
+        NEW_TOPIC = "todoNameInvalid";
+      }
+
       PubSub.publish(NEW_TOPIC, data);
     });
   }

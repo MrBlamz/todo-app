@@ -13,6 +13,7 @@ export const todoFormCloseBtn = document.querySelector(".todo-form-close-btn");
 export const todoFormSubmitBtn = document.querySelector(
   ".todo-form-submit-btn"
 );
+export const todoFormTitle = document.querySelector(".todo-form-title");
 export const todoFormNameInput = document.getElementById("todo-name");
 export const todoFormDateInput = document.getElementById("todo-date");
 export const todoFormPriorityInput = document.getElementById("todo-priority");

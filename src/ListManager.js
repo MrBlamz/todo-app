@@ -11,6 +11,8 @@ const ListManager = (function () {
     addTodoToList();
     fetchTodo();
     deleteTodoFromList();
+    getTodoToBeEdited();
+    editTodo();
   }
 
   function addList() {
@@ -58,7 +60,7 @@ const ListManager = (function () {
   }
 
   function addTodoToList() {
-    const TOPIC = "todoNameValid";
+    const TOPIC = "newTodoNameValid";
 
     PubSub.subscribe(TOPIC, (msg, data) => {
       const listName = data.listName;
@@ -102,6 +104,43 @@ const ListManager = (function () {
     PubSub.subscribe(TOPIC, (msg, data) => {
       const list = getList(data.listName);
       list.deleteTodo(data.todoName);
+    });
+  }
+
+  function getTodoToBeEdited() {
+    const TOPIC = "getTodoInfoToBeEdited";
+
+    PubSub.subscribe(TOPIC, (msg, data) => {
+      const list = getList(data.listName);
+      data.todo = list.getTodo(data.todoName);
+      const NEW_TOPIC = "todoToBeEditedFound";
+      PubSub.publish(NEW_TOPIC, data);
+    });
+  }
+
+  function editTodo() {
+    const TOPIC = "editedNameValid";
+
+    PubSub.subscribe(TOPIC, (msg, data) => {
+      const listName = data.listName;
+      const list = getList(listName);
+      data.form.name = capitalizeFirstLetter(data.form.name);
+      const isUnavailable =
+        list.contains(data.form.name) && data.form.name !== data.oldTodoName;
+      let NEW_TOPIC;
+
+      if (isUnavailable) {
+        NEW_TOPIC = "TodoNameUnavailable";
+      } else {
+        const todo = list.getTodo(data.oldTodoName);
+        todo.setName(data.form.name);
+        todo.setDueDate(data.form.dueDate);
+        todo.setPriority(data.form.priority);
+        todo.setNotes(data.form.notes);
+        NEW_TOPIC = "todoEdited";
+      }
+
+      PubSub.publish(NEW_TOPIC, data);
     });
   }
 

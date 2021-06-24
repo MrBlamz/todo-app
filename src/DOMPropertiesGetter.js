@@ -2,10 +2,12 @@ import PubSub from "pubsub-js";
 import {
   listViewName,
   newListNameInput,
+  todoForm,
   todoFormDateInput,
   todoFormNameInput,
   todoFormNotesInput,
   todoFormPriorityInput,
+  todoFormTitle,
 } from "./DOMElements";
 
 const DOMPropertiesGetter = (function () {
@@ -16,6 +18,7 @@ const DOMPropertiesGetter = (function () {
     getTodoFormValue();
     getClickedTodoName();
     getDeletedTodoName();
+    getTodoInfoToBeEdited();
   }
 
   function getNewListName() {
@@ -54,7 +57,9 @@ const DOMPropertiesGetter = (function () {
     const TOPIC = "todoFormSubmitBtnClicked";
 
     PubSub.subscribe(TOPIC, () => {
+      const mode = todoFormTitle.textContent.includes("New") ? "New" : "Edit";
       const listName = listViewName.textContent;
+      const oldTodoName = todoForm.getAttribute("data-old-name");
       const form = {
         name: todoFormNameInput.value,
         dueDate: todoFormDateInput.value,
@@ -63,7 +68,7 @@ const DOMPropertiesGetter = (function () {
       };
 
       const NEW_TOPIC = "validateTodoName";
-      PubSub.publish(NEW_TOPIC, { listName, form });
+      PubSub.publish(NEW_TOPIC, { mode, listName, form, oldTodoName });
     });
   }
 
@@ -86,6 +91,18 @@ const DOMPropertiesGetter = (function () {
       const listName = todoElement.getAttribute("data-list");
       const todoName = todoElement.querySelector(".todo-name").textContent;
       const NEW_TOPIC = "deleteTodo";
+      PubSub.publish(NEW_TOPIC, { todoElement, listName, todoName });
+    });
+  }
+
+  function getTodoInfoToBeEdited() {
+    const TOPIC = "editTodoBtnClicked";
+
+    PubSub.subscribe(TOPIC, (msg, event) => {
+      const todoElement = event.target.parentElement.parentElement;
+      const listName = todoElement.getAttribute("data-list");
+      const todoName = todoElement.querySelector(".todo-name").textContent;
+      const NEW_TOPIC = "getTodoInfoToBeEdited";
       PubSub.publish(NEW_TOPIC, { todoElement, listName, todoName });
     });
   }

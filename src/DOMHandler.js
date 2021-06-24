@@ -15,6 +15,11 @@ import {
   todoOverviewInfoList,
   todoOverviewInfoNotes,
   todoOverviewInfoPriority,
+  todoFormNameInput,
+  todoFormDateInput,
+  todoFormPriorityInput,
+  todoFormNotesInput,
+  todoFormTitle,
 } from "./DOMElements";
 import { createList, createTodo } from "./DOMElementCreator";
 
@@ -37,6 +42,8 @@ const DOMHandler = (function () {
     closeTodoOverview();
     toggleTodoCompleted();
     deleteTodo();
+    openEditTodoForm();
+    editTodo();
   }
 
   function toggleSidebar() {
@@ -110,6 +117,7 @@ const DOMHandler = (function () {
     const TOPIC = "openNewTodoForm";
 
     PubSub.subscribe(TOPIC, () => {
+      setTextContent(todoFormTitle, "New Todo");
       toggleElementClass(todoFormContainer, "active");
       blurBackground();
     });
@@ -121,6 +129,8 @@ const DOMHandler = (function () {
     PubSub.subscribe(TOPIC, () => {
       toggleElementClass(todoFormContainer, "active");
       blurBackground();
+      const NEW_TOPIC = "resetForm";
+      PubSub.publish(NEW_TOPIC);
     });
   }
 
@@ -207,7 +217,60 @@ const DOMHandler = (function () {
     });
   }
 
+  function openEditTodoForm() {
+    const TOPIC = "todoToBeEditedFound";
+
+    PubSub.subscribe(TOPIC, (msg, data) => {
+      todoForm.setAttribute("data-list", data.listName);
+      todoForm.setAttribute("data-old-name", data.todoName);
+      setTextContent(todoFormTitle, "Edit Todo");
+      updateTodoForm(
+        data.todo.getName(),
+        data.todo.getDueDate(),
+        data.todo.getPriority(),
+        data.todo.getNotes()
+      );
+      toggleElementClass(todoFormContainer, "active");
+      blurBackground();
+    });
+  }
+
+  function editTodo() {
+    const TOPIC = "todoEdited";
+
+    PubSub.subscribe(TOPIC, (msg, data) => {
+      const todos = todoContainer.querySelectorAll(".todo");
+
+      for (let i = 0; i < todos.length; i++) {
+        const nameElement = todos[i].querySelector(".todo-name");
+        const listName = todos[i].getAttribute("data-list");
+        const todoName = nameElement.textContent;
+
+        if (listName === data.listName && todoName === data.oldTodoName) {
+          const todo = createTodo(
+            data.form.name,
+            data.form.dueDate,
+            data.listName
+          );
+          todoContainer.replaceChild(todo, todos[i]);
+          const NEW_TOPIC = "resetForm";
+          const SECOND_TOPIC = "closeTodoForm";
+          PubSub.publish(NEW_TOPIC);
+          PubSub.publish(SECOND_TOPIC);
+          return;
+        }
+      }
+    });
+  }
+
   // Helper functions
+  function updateTodoForm(name, date, priority, notes) {
+    todoFormNameInput.value = name;
+    todoFormDateInput.value = date;
+    todoFormPriorityInput.value = priority;
+    todoFormNotesInput.value = notes;
+  }
+
   function setTextContent(element, text) {
     element.textContent = text;
   }

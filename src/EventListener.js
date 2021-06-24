@@ -24,6 +24,7 @@ const EventListener = (function () {
     todoClicked();
     todoOverviewCloseBtnClicked();
     todoCheckboxClicked();
+    editTodoBtnClicked();
     deleteTodoBtnClicked();
   }
 
@@ -138,6 +139,18 @@ const EventListener = (function () {
       );
 
       if (isCheckbox) {
+        PubSub.publish(TOPIC, event);
+      }
+    });
+  }
+
+  function editTodoBtnClicked() {
+    const TOPIC = "editTodoBtnClicked";
+
+    todoContainer.addEventListener("click", (event) => {
+      const isEditButton = isDesiredElement(event.target, "edit-todo-btn");
+
+      if (isEditButton) {
         PubSub.publish(TOPIC, event);
       }
     });
