@@ -244,9 +244,14 @@ i {
   background-color: var(--main-color);
 }
 
+.todo .todo-info-container {
+  pointer-events: none;
+}
+
 .todo .due-date-container {
   margin-left: auto;
   margin-right: 0.5rem;
+  pointer-events: none;
 }
 
 .todo .todo-btn-container {
