@@ -35,6 +35,7 @@ const DOMHandler = (function () {
     alertTodoNameUnavailable();
     renderTodoOverview();
     closeTodoOverview();
+    toggleTodoCompleted();
   }
 
   function toggleSidebar() {
@@ -185,6 +186,15 @@ const DOMHandler = (function () {
     PubSub.subscribe(TOPIC, () => {
       blurBackground();
       toggleElementClass(todoOverviewContainer, "active");
+    });
+  }
+
+  function toggleTodoCompleted() {
+    const TOPIC = "todoCheckboxClicked";
+
+    PubSub.subscribe(TOPIC, (msg, event) => {
+      const todo = event.target.parentElement.parentElement;
+      toggleElementClass(todo, "completed");
     });
   }
 

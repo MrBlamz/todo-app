@@ -23,6 +23,7 @@ const EventListener = (function () {
     todoFormSubmitBtnClicked();
     todoClicked();
     todoOverviewCloseBtnClicked();
+    todoCheckboxClicked();
   }
 
   function toggleSidebarBtnClicked() {
@@ -123,6 +124,21 @@ const EventListener = (function () {
 
     todoOverviewCloseBtn.addEventListener("click", () => {
       PubSub.publish(TOPIC);
+    });
+  }
+
+  function todoCheckboxClicked() {
+    const TOPIC = "todoCheckboxClicked";
+
+    todoContainer.addEventListener("click", (event) => {
+      const isCheckbox = isDesiredElement(
+        event.target,
+        "todo-completed-checkbox"
+      );
+
+      if (isCheckbox) {
+        PubSub.publish(TOPIC, event);
+      }
     });
   }
 

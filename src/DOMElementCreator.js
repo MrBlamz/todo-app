@@ -22,6 +22,15 @@ export const createTodo = function (name, dueDate, list) {
   const todo = createContainer("todo");
   todo.setAttribute("data-list", list);
 
+  const checkBoxContainer = createContainer("checkbox-container");
+  const checkbox = createInput(
+    "checkbox",
+    "todo-completed-checkbox",
+    "todo-completed"
+  );
+  const label = createLabel("todo-completed-label", "todo-completed");
+  checkBoxContainer.append(checkbox, label);
+
   const infoContainer = createContainer("todo-info-container");
   const todoName = createParagraph("todo-name", name);
   infoContainer.appendChild(todoName);
@@ -39,7 +48,12 @@ export const createTodo = function (name, dueDate, list) {
   deleteBtn.appendChild(deleteBtnIcon);
   buttonsContainer.append(editBtn, deleteBtn);
 
-  todo.append(infoContainer, dateContainer, buttonsContainer);
+  todo.append(
+    checkBoxContainer,
+    infoContainer,
+    dateContainer,
+    buttonsContainer
+  );
   return todo;
 };
 
@@ -67,4 +81,19 @@ function createI(...className) {
   const i = document.createElement("i");
   className.forEach((name) => i.classList.add(name));
   return i;
+}
+
+function createInput(type, className, id) {
+  const input = document.createElement("input");
+  input.classList.add(className);
+  input.type = type;
+  input.id = id;
+  return input;
+}
+
+function createLabel(className, htmlFor) {
+  const label = document.createElement("label");
+  label.classList.add(className);
+  label.htmlFor = htmlFor;
+  return label;
 }
