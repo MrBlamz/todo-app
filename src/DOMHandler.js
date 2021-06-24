@@ -9,6 +9,12 @@ import {
   todoContainer,
   todoForm,
   listViewName,
+  todoOverviewContainer,
+  todoOverviewInfoName,
+  todoOverviewInfoDate,
+  todoOverviewInfoList,
+  todoOverviewInfoNotes,
+  todoOverviewInfoPriority,
 } from "./DOMElements";
 import { createList, createTodo } from "./DOMElementCreator";
 
@@ -27,6 +33,8 @@ const DOMHandler = (function () {
     resetTodoForm();
     alertTodoNameInvalid();
     alertTodoNameUnavailable();
+    renderTodoOverview();
+    closeTodoOverview();
   }
 
   function toggleSidebar() {
@@ -90,7 +98,7 @@ const DOMHandler = (function () {
       updateListViewHeader(list.getName());
 
       list.getTodos().forEach((todo) => {
-        const t = createTodo(todo.getName(), todo.getDueDate());
+        const t = createTodo(todo.getName(), todo.getDueDate(), list.getName());
         todoContainer.appendChild(t);
       });
     });
@@ -118,7 +126,7 @@ const DOMHandler = (function () {
     const TOPIC = "todoAdded";
 
     PubSub.subscribe(TOPIC, (msg, data) => {
-      const todo = createTodo(data.form.name, data.form.dueDate);
+      const todo = createTodo(data.form.name, data.form.dueDate, data.listName);
       todoContainer.appendChild(todo);
       const NEW_TOPIC = "resetForm";
       const SECOND_TOPIC = "closeTodoForm";
@@ -151,7 +159,40 @@ const DOMHandler = (function () {
     });
   }
 
+  function renderTodoOverview() {
+    const TOPIC = "todoFound";
+
+    PubSub.subscribe(TOPIC, (msg, data) => {
+      blurBackground();
+      toggleElementClass(todoOverviewContainer, "active");
+      setTextContent(todoOverviewInfoName, data.todo.getName());
+      setTextContent(
+        todoOverviewInfoDate,
+        `Due Date: ${data.todo.getDueDate()}`
+      );
+      setTextContent(
+        todoOverviewInfoPriority,
+        `Priority: ${data.todo.getPriority()}`
+      );
+      setTextContent(todoOverviewInfoList, `List: ${data.listName}`);
+      setTextContent(todoOverviewInfoNotes, `Notes: ${data.todo.getNotes()}`);
+    });
+  }
+
+  function closeTodoOverview() {
+    const TOPIC = "todoOverviewCloseBtnClicked";
+
+    PubSub.subscribe(TOPIC, () => {
+      blurBackground();
+      toggleElementClass(todoOverviewContainer, "active");
+    });
+  }
+
   // Helper functions
+  function setTextContent(element, text) {
+    element.textContent = text;
+  }
+
   function updateListViewHeader(text) {
     listViewName.textContent = text;
   }

@@ -12,9 +12,19 @@ const Todo = function (name, dueDate, priority, notes) {
     return _dueDate;
   }
 
+  function getPriority() {
+    return _priority;
+  }
+
+  function getNotes() {
+    return _notes;
+  }
+
   return {
     getName,
     getDueDate,
+    getPriority,
+    getNotes,
   };
 };
 

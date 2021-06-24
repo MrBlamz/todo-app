@@ -12,6 +12,14 @@ const List = function (name) {
     return _name;
   }
 
+  function getTodo(name) {
+    for (let i = 0; i < _todos.length; i++) {
+      if (_todos[i].getName() === name) {
+        return _todos[i];
+      }
+    }
+  }
+
   function getTodos() {
     return _todos;
   }
@@ -24,6 +32,7 @@ const List = function (name) {
   return {
     addTodo,
     getName,
+    getTodo,
     getTodos,
     contains,
   };

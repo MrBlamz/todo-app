@@ -9,24 +9,25 @@ const ListManager = (function () {
     deleteList();
     fetchList();
     addTodoToList();
+    fetchTodo();
   }
 
   function addList() {
     const TOPIC = "listNameValid";
 
     PubSub.subscribe(TOPIC, (msg, name) => {
-      const capitalized = capitalize(name);
-      const available = nameIsAvailable(capitalized);
+      const capitalizedListName = capitalizeFirstLetter(name);
+      const available = nameIsAvailable(capitalizedListName);
       let NEW_TOPIC;
 
       if (available) {
-        _lists.push(List(capitalized));
+        _lists.push(List(capitalizedListName));
         NEW_TOPIC = "listAdded";
       } else {
         NEW_TOPIC = "listNameUnavailable";
       }
 
-      PubSub.publish(NEW_TOPIC, capitalized);
+      PubSub.publish(NEW_TOPIC, capitalizedListName);
     });
   }
 
@@ -61,6 +62,7 @@ const ListManager = (function () {
     PubSub.subscribe(TOPIC, (msg, data) => {
       const listName = data.listName;
       const list = getList(listName);
+      data.form.name = capitalizeFirstLetter(data.form.name);
       const isUnavailable = list.contains(data.form.name);
       let NEW_TOPIC;
 
@@ -80,6 +82,19 @@ const ListManager = (function () {
     });
   }
 
+  function fetchTodo() {
+    const TOPIC = "fetchTodo";
+
+    PubSub.subscribe(TOPIC, (msg, data) => {
+      const list = getList(data.listName);
+      const todo = list.getTodo(data.todoName);
+      data.todo = todo;
+
+      const NEW_TOPIC = "todoFound";
+      PubSub.publish(NEW_TOPIC, data);
+    });
+  }
+
   // Helper functions
   function getList(name) {
     for (let i = 0; i < _lists.length; i++) {
@@ -89,7 +104,7 @@ const ListManager = (function () {
     }
   }
 
-  function capitalize(string) {
+  function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 

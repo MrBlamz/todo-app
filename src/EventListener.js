@@ -6,7 +6,8 @@ import {
   addListInputContainer,
   addListBtn,
   listsContainer,
-  todoFormSubmitBtn,
+  todoContainer,
+  todoOverviewCloseBtn,
 } from "./DOMElements";
 
 const EventListener = (function () {
@@ -20,6 +21,8 @@ const EventListener = (function () {
     openNewTodoFormBtnClicked();
     todoFormCloseBtnClicked();
     todoFormSubmitBtnClicked();
+    todoClicked();
+    todoOverviewCloseBtnClicked();
   }
 
   function toggleSidebarBtnClicked() {
@@ -100,6 +103,26 @@ const EventListener = (function () {
         event.preventDefault();
         PubSub.publish(TOPIC);
       }
+    });
+  }
+
+  function todoClicked() {
+    const TOPIC = "todoClicked";
+
+    todoContainer.addEventListener("click", (event) => {
+      const isTodo = isDesiredElement(event.target, "todo");
+
+      if (isTodo) {
+        PubSub.publish(TOPIC, event);
+      }
+    });
+  }
+
+  function todoOverviewCloseBtnClicked() {
+    const TOPIC = "todoOverviewCloseBtnClicked";
+
+    todoOverviewCloseBtn.addEventListener("click", () => {
+      PubSub.publish(TOPIC);
     });
   }
 

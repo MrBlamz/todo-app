@@ -23,3 +23,26 @@ export const addListInputContainer = document.querySelector(
 export const newListNameInput = document.querySelector(".add-list-input");
 export const addListBtn = document.querySelector(".add-list-btn");
 export const listViewName = document.querySelector(".list-view-name");
+export const todoOverviewContainer = document.querySelector(
+  ".todo-overview-container"
+);
+export const todoOverviewInfoName = document.querySelector(
+  ".todo-overview-info-name"
+);
+export const todoOverviewInfoDate = document.querySelector(
+  ".todo-overview-info-date"
+);
+
+export const todoOverviewInfoPriority = document.querySelector(
+  ".todo-overview-info-priority"
+);
+export const todoOverviewInfoList = document.querySelector(
+  ".todo-overview-info-list"
+);
+export const todoOverviewInfoNotes = document.querySelector(
+  ".todo-overview-info-notes"
+);
+
+export const todoOverviewCloseBtn = document.querySelector(
+  ".todo-overview-close-btn"
+);
