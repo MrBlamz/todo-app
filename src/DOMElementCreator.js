@@ -18,8 +18,9 @@ export const createList = function (name) {
   return list;
 };
 
-export const createTodo = function (name, dueDate) {
+export const createTodo = function (name, dueDate, list) {
   const todo = createContainer("todo");
+  todo.setAttribute("data-list", list);
 
   const infoContainer = createContainer("todo-info-container");
   const todoName = createParagraph("todo-name", name);
