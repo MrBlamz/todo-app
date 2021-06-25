@@ -147,6 +147,9 @@ const DOMHandler = (function () {
 
       updateListViewTodoCounter(todoContainer.children.length);
       removeElementClass(openNewTodoFormBtnContainer, "disabled");
+
+      const NEW_TOPIC = "toggleSidebar";
+      PubSub.publish(NEW_TOPIC);
     });
   }
 
@@ -187,13 +190,13 @@ const DOMHandler = (function () {
     PubSub.subscribe(TOPIC, (msg, data) => {
       const todo = createTodo(data.form.name, data.form.dueDate, data.listName);
       todoContainer.appendChild(todo);
+      updateListViewTodoCounter(todoContainer.children.length);
+
       const NEW_TOPIC = "resetForm";
       const SECOND_TOPIC = "closeTodoForm";
       PubSub.publish(NEW_TOPIC);
       PubSub.publish(SECOND_TOPIC);
     });
-
-    updateListViewTodoCounter(todoContainer.children.length);
   }
 
   function resetTodoForm() {
