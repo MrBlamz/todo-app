@@ -13,6 +13,7 @@ const ListManager = (function () {
     deleteTodoFromList();
     getTodoToBeEdited();
     editTodo();
+    fetchAllLists();
   }
 
   function addList() {
@@ -141,6 +142,16 @@ const ListManager = (function () {
       }
 
       PubSub.publish(NEW_TOPIC, data);
+    });
+  }
+
+  function fetchAllLists() {
+    const TOPIC = "fetchAllLists";
+
+    PubSub.subscribe(TOPIC, () => {
+      const lists = _lists;
+      const NEW_TOPIC = "listsFound";
+      PubSub.publish(NEW_TOPIC, lists);
     });
   }
 

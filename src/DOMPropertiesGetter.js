@@ -58,7 +58,18 @@ const DOMPropertiesGetter = (function () {
 
     PubSub.subscribe(TOPIC, () => {
       const mode = todoFormTitle.textContent.includes("New") ? "New" : "Edit";
-      const listName = listViewName.textContent;
+      let listName;
+
+      switch (mode) {
+        case "New":
+          listName = listViewName.textContent;
+          break;
+        case "Edit":
+          listName = todoForm.getAttribute("data-list");
+        default:
+          break;
+      }
+
       const oldTodoName = todoForm.getAttribute("data-old-name");
       const form = {
         name: todoFormNameInput.value,

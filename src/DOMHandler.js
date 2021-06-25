@@ -21,11 +21,14 @@ import {
   todoFormNotesInput,
   todoFormTitle,
   listViewIcon,
+  openNewTodoFormBtnContainer,
+  listViewTodoCounter,
 } from "./DOMElements";
 import { createList, createTodo } from "./DOMElementCreator";
 
 const DOMHandler = (function () {
   function init() {
+    renderHome();
     toggleSidebar();
     alertListNameInvalid();
     alertListNameUnavailable();
@@ -46,6 +49,29 @@ const DOMHandler = (function () {
     deleteTodo();
     openEditTodoForm();
     editTodo();
+  }
+
+  function renderHome() {
+    const TOPIC = "listsFound";
+
+    PubSub.subscribe(TOPIC, (msg, lists) => {
+      clearTodoContainer();
+      updateListViewHeader("fas fa-home", "Home");
+      toggleElementClass(openNewTodoFormBtnContainer, "disabled");
+
+      lists.forEach((list) => {
+        list.getTodos().forEach((todo) => {
+          const t = createTodo(
+            todo.getName(),
+            todo.getDueDate(),
+            list.getName()
+          );
+          todoContainer.appendChild(t);
+        });
+      });
+
+      updateListViewTodoCounter(todoContainer.children.length);
+    });
   }
 
   function toggleSidebar() {
@@ -90,12 +116,12 @@ const DOMHandler = (function () {
 
     PubSub.subscribe(TOPIC, (msg, data) => {
       const isSelected = data.listElement.classList.contains("selected");
+      listsContainer.removeChild(data.listElement);
 
       if (isSelected) {
-        // TODO - render Home
+        const NEW_TOPIC = "fetchAllLists";
+        PubSub.publish(NEW_TOPIC);
       }
-
-      listsContainer.removeChild(data.listElement);
     });
   }
 
@@ -118,6 +144,9 @@ const DOMHandler = (function () {
         const t = createTodo(todo.getName(), todo.getDueDate(), list.getName());
         todoContainer.appendChild(t);
       });
+
+      updateListViewTodoCounter(todoContainer.children.length);
+      removeElementClass(openNewTodoFormBtnContainer, "disabled");
     });
   }
 
@@ -163,6 +192,8 @@ const DOMHandler = (function () {
       PubSub.publish(NEW_TOPIC);
       PubSub.publish(SECOND_TOPIC);
     });
+
+    updateListViewTodoCounter(todoContainer.children.length);
   }
 
   function resetTodoForm() {
@@ -232,6 +263,7 @@ const DOMHandler = (function () {
 
     PubSub.subscribe(TOPIC, (msg, data) => {
       todoContainer.removeChild(data.todoElement);
+      updateListViewTodoCounter(todoContainer.children.length);
     });
   }
 
@@ -282,6 +314,15 @@ const DOMHandler = (function () {
   }
 
   // Helper functions
+  function updateListViewTodoCounter(number) {
+    if (number === 1) {
+      listViewTodoCounter.textContent = `${number} Todo`;
+      return;
+    }
+
+    listViewTodoCounter.textContent = `${number} Todos`;
+  }
+
   function clearPreviousSelectedList() {
     const lists = listsContainer.querySelectorAll(".list");
 
@@ -338,6 +379,10 @@ const DOMHandler = (function () {
 
   function toggleElementClass(element, className) {
     element.classList.toggle(className);
+  }
+
+  function removeElementClass(element, className) {
+    element.classList.remove(className);
   }
 
   return {

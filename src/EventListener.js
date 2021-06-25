@@ -12,6 +12,7 @@ import {
 
 const EventListener = (function () {
   function init() {
+    pageLoaded();
     // Sidebar
     toggleSidebarBtnClicked();
     newListNameInputted();
@@ -26,6 +27,14 @@ const EventListener = (function () {
     todoCheckboxClicked();
     editTodoBtnClicked();
     deleteTodoBtnClicked();
+  }
+
+  function pageLoaded() {
+    const TOPIC = "fetchAllLists";
+
+    window.addEventListener("DOMContentLoaded", () => {
+      PubSub.publish(TOPIC);
+    });
   }
 
   function toggleSidebarBtnClicked() {

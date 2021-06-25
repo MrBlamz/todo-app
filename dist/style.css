@@ -38,6 +38,10 @@ i {
   filter: blur(3px);
 }
 
+.disabled {
+  display: none;
+}
+
 .top-bar {
   background-color: var(--main-color);
   display: flex;

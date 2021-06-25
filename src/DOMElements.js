@@ -6,6 +6,9 @@ export const listsContainer = document.querySelector(".lists");
 export const todoContainer = document.querySelector(".todo-container");
 export const todoFormContainer = document.querySelector(".todo-form-container");
 export const todoForm = document.querySelector(".todo-form");
+export const openNewTodoFormBtnContainer = document.querySelector(
+  ".open-new-todo-form-btn-container"
+);
 export const openNewTodoFormBtn = document.querySelector(
   ".open-new-todo-form-btn"
 );
@@ -26,6 +29,9 @@ export const addListBtn = document.querySelector(".add-list-btn");
 export const listViewIcon =
   document.querySelector(".list-view-icon").firstElementChild;
 export const listViewName = document.querySelector(".list-view-name");
+export const listViewTodoCounter = document.querySelector(
+  ".list-todos-remaining-counter"
+);
 export const todoOverviewContainer = document.querySelector(
   ".todo-overview-container"
 );
