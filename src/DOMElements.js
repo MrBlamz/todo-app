@@ -23,6 +23,8 @@ export const addListInputContainer = document.querySelector(
 );
 export const newListNameInput = document.querySelector(".add-list-input");
 export const addListBtn = document.querySelector(".add-list-btn");
+export const listViewIcon =
+  document.querySelector(".list-view-icon").firstElementChild;
 export const listViewName = document.querySelector(".list-view-name");
 export const todoOverviewContainer = document.querySelector(
   ".todo-overview-container"

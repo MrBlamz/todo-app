@@ -20,6 +20,7 @@ import {
   todoFormPriorityInput,
   todoFormNotesInput,
   todoFormTitle,
+  listViewIcon,
 } from "./DOMElements";
 import { createList, createTodo } from "./DOMElementCreator";
 
@@ -32,6 +33,7 @@ const DOMHandler = (function () {
     deleteList();
     clearNewListInput();
     renderList();
+    setClickedListAsSelected();
     openNewTodoForm();
     closeTodoForm();
     renderTodo();
@@ -87,6 +89,12 @@ const DOMHandler = (function () {
     const TOPIC = "listDeleted";
 
     PubSub.subscribe(TOPIC, (msg, data) => {
+      const isSelected = data.listElement.classList.contains("selected");
+
+      if (isSelected) {
+        // TODO - render Home
+      }
+
       listsContainer.removeChild(data.listElement);
     });
   }
@@ -104,12 +112,22 @@ const DOMHandler = (function () {
 
     PubSub.subscribe(TOPIC, (msg, list) => {
       clearTodoContainer();
-      updateListViewHeader(list.getName());
+      updateListViewHeader("fas fa-clipboard-list", list.getName());
 
       list.getTodos().forEach((todo) => {
         const t = createTodo(todo.getName(), todo.getDueDate(), list.getName());
         todoContainer.appendChild(t);
       });
+    });
+  }
+
+  function setClickedListAsSelected() {
+    const TOPIC = "listClicked";
+
+    PubSub.subscribe(TOPIC, (msg, event) => {
+      clearPreviousSelectedList();
+      const listElement = event.target;
+      listElement.classList.add("selected");
     });
   }
 
@@ -264,6 +282,17 @@ const DOMHandler = (function () {
   }
 
   // Helper functions
+  function clearPreviousSelectedList() {
+    const lists = listsContainer.querySelectorAll(".list");
+
+    for (let i = 0; i < lists.length; i++) {
+      if (lists[i].classList.contains("selected")) {
+        toggleElementClass(lists[i], "selected");
+        return;
+      }
+    }
+  }
+
   function updateTodoForm(name, date, priority, notes) {
     todoFormNameInput.value = name;
     todoFormDateInput.value = date;
@@ -275,7 +304,8 @@ const DOMHandler = (function () {
     element.textContent = text;
   }
 
-  function updateListViewHeader(text) {
+  function updateListViewHeader(iconClass, text) {
+    listViewIcon.className = iconClass;
     listViewName.textContent = text;
   }
 
