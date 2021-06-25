@@ -8,11 +8,14 @@ import {
   listsContainer,
   todoContainer,
   todoOverviewCloseBtn,
+  searchBarSubmitBtn,
+  searchBar,
 } from "./DOMElements";
 
 const EventListener = (function () {
   function init() {
     pageLoaded();
+    searchBarInputSubmitted();
     // Sidebar
     toggleSidebarBtnClicked();
     newListNameInputted();
@@ -34,6 +37,22 @@ const EventListener = (function () {
 
     window.addEventListener("DOMContentLoaded", () => {
       PubSub.publish(TOPIC);
+    });
+  }
+
+  function searchBarInputSubmitted() {
+    const TOPIC = "searchBarInputSubmitted";
+
+    searchBarSubmitBtn.addEventListener("click", () => {
+      PubSub.publish(TOPIC);
+    });
+
+    searchBar.addEventListener("keydown", (event) => {
+      const isEnter = isDesiredKey(event.key, "Enter");
+
+      if (isEnter) {
+        PubSub.publish(TOPIC);
+      }
     });
   }
 

@@ -14,6 +14,7 @@ const ListManager = (function () {
     getTodoToBeEdited();
     editTodo();
     fetchAllLists();
+    fetchSearchedTodos();
   }
 
   function addList() {
@@ -152,6 +153,28 @@ const ListManager = (function () {
       const lists = _lists;
       const NEW_TOPIC = "listsFound";
       PubSub.publish(NEW_TOPIC, lists);
+    });
+  }
+
+  function fetchSearchedTodos() {
+    const TOPIC = "fetchSearchedTodos";
+
+    PubSub.subscribe(TOPIC, (msg, todoName) => {
+      const data = [];
+
+      _lists.forEach((list) => {
+        const info = {};
+        const capitalizedTodoName = capitalizeFirstLetter(todoName);
+
+        if (list.contains(capitalizedTodoName)) {
+          info.todo = list.getTodo(capitalizedTodoName);
+          info.list = list.getName();
+          data.push(info);
+        }
+      });
+
+      const NEW_TOPIC = "searchedTodosFetched";
+      PubSub.publish(NEW_TOPIC, data);
     });
   }
 

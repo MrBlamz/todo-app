@@ -29,6 +29,7 @@ import { createList, createTodo } from "./DOMElementCreator";
 const DOMHandler = (function () {
   function init() {
     renderHome();
+    renderSearchedTodos();
     toggleSidebar();
     alertListNameInvalid();
     alertListNameUnavailable();
@@ -71,6 +72,31 @@ const DOMHandler = (function () {
       });
 
       updateListViewTodoCounter(todoContainer.children.length);
+    });
+  }
+
+  function renderSearchedTodos() {
+    const TOPIC = "searchedTodosFetched";
+
+    PubSub.subscribe(TOPIC, (msg, data) => {
+      clearTodoContainer();
+      updateListViewHeader("fas fa-search", "Search");
+      addElementClass(openNewTodoFormBtnContainer, "disabled");
+
+      data.forEach((info) => {
+        const t = createTodo(
+          info.todo.getName(),
+          info.todo.getDueDate(),
+          info.list
+        );
+        todoContainer.appendChild(t);
+      });
+
+      updateListViewTodoCounter(todoContainer.children.length);
+      if (sideBarIsOpen()) {
+        const NEW_TOPIC = "toggleSidebar";
+        PubSub.publish(NEW_TOPIC);
+      }
     });
   }
 
@@ -310,13 +336,16 @@ const DOMHandler = (function () {
           const SECOND_TOPIC = "closeTodoForm";
           PubSub.publish(NEW_TOPIC);
           PubSub.publish(SECOND_TOPIC);
-          return;
         }
       }
     });
   }
 
   // Helper functions
+  function sideBarIsOpen() {
+    return sideBar.classList.contains("active");
+  }
+
   function updateListViewTodoCounter(number) {
     if (number === 1) {
       listViewTodoCounter.textContent = `${number} Todo`;
@@ -386,6 +415,10 @@ const DOMHandler = (function () {
 
   function removeElementClass(element, className) {
     element.classList.remove(className);
+  }
+
+  function addElementClass(element, className) {
+    element.classList.add(className);
   }
 
   return {

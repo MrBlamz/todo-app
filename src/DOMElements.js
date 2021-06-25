@@ -1,5 +1,12 @@
 export const contentContainer = document.querySelector(".content");
 export const topBar = document.querySelector(".top-bar");
+export const searchBarContainer = document.querySelector(
+  ".search-bar-container"
+);
+export const searchBar = document.getElementById("search-bar");
+export const searchBarSubmitBtn = document.getElementById(
+  "search-bar-submit-btn"
+);
 export const sideBar = document.querySelector(".sidebar");
 export const toggleSidebarBtn = document.querySelector(".toggle-sidebar-btn");
 export const listsContainer = document.querySelector(".lists");

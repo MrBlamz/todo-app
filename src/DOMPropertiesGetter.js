@@ -2,6 +2,7 @@ import PubSub from "pubsub-js";
 import {
   listViewName,
   newListNameInput,
+  searchBar,
   todoForm,
   todoFormDateInput,
   todoFormNameInput,
@@ -12,6 +13,7 @@ import {
 
 const DOMPropertiesGetter = (function () {
   function init() {
+    getSearchBarValue();
     getNewListName();
     getDeletedListName();
     getClickedListName();
@@ -19,6 +21,19 @@ const DOMPropertiesGetter = (function () {
     getClickedTodoName();
     getDeletedTodoName();
     getTodoInfoToBeEdited();
+  }
+
+  function getSearchBarValue() {
+    const TOPIC = "searchBarInputSubmitted";
+
+    PubSub.subscribe(TOPIC, () => {
+      const input = searchBar.value;
+
+      if (input) {
+        const NEW_TOPIC = "fetchSearchedTodos";
+        PubSub.publish(NEW_TOPIC, input);
+      }
+    });
   }
 
   function getNewListName() {
