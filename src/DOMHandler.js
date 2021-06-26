@@ -283,7 +283,8 @@ const DOMHandler = (function () {
 
     PubSub.subscribe(TOPIC, (msg, event) => {
       const todo = event.target.parentElement.parentElement;
-      toggleElementClass(todo, "completed");
+      addElementClass(todo, "animate__animated");
+      addElementClass(todo, "animate__hinge");
     });
   }
 

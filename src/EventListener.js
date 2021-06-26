@@ -27,9 +27,10 @@ const EventListener = (function () {
     todoFormSubmitBtnClicked();
     todoClicked();
     todoOverviewCloseBtnClicked();
-    todoCheckboxClicked();
+    todoCompletedCheckboxClicked();
     editTodoBtnClicked();
     deleteTodoBtnClicked();
+    completedTodoAnimationEnded();
   }
 
   function pageLoaded() {
@@ -159,7 +160,7 @@ const EventListener = (function () {
     });
   }
 
-  function todoCheckboxClicked() {
+  function todoCompletedCheckboxClicked() {
     const TOPIC = "todoCheckboxClicked";
 
     todoContainer.addEventListener("click", (event) => {
@@ -195,6 +196,14 @@ const EventListener = (function () {
       if (isDeleteButton) {
         PubSub.publish(TOPIC, event);
       }
+    });
+  }
+
+  function completedTodoAnimationEnded() {
+    const TOPIC = "completedTodoAnimationEnded";
+
+    todoContainer.addEventListener("animationend", (event) => {
+      PubSub.publish(TOPIC, event);
     });
   }
 

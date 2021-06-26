@@ -21,6 +21,7 @@ const DOMPropertiesGetter = (function () {
     getClickedTodoName();
     getDeletedTodoName();
     getTodoInfoToBeEdited();
+    getCompletedTodo();
   }
 
   function getSearchBarValue() {
@@ -129,6 +130,18 @@ const DOMPropertiesGetter = (function () {
       const listName = todoElement.getAttribute("data-list");
       const todoName = todoElement.querySelector(".todo-name").textContent;
       const NEW_TOPIC = "getTodoInfoToBeEdited";
+      PubSub.publish(NEW_TOPIC, { todoElement, listName, todoName });
+    });
+  }
+
+  function getCompletedTodo() {
+    const TOPIC = "completedTodoAnimationEnded";
+
+    PubSub.subscribe(TOPIC, (msg, event) => {
+      const todoElement = event.target;
+      const listName = todoElement.getAttribute("data-list");
+      const todoName = todoElement.querySelector(".todo-name").textContent;
+      const NEW_TOPIC = "deleteTodo";
       PubSub.publish(NEW_TOPIC, { todoElement, listName, todoName });
     });
   }
