@@ -33,10 +33,12 @@ const EventListener = (function () {
   }
 
   function pageLoaded() {
-    const TOPIC = "fetchAllLists";
+    const FIRST_TOPIC = "fetchListsFromLocalStorage";
+    const SECOND_TOPIC = "fetchAllLists";
 
     window.addEventListener("DOMContentLoaded", () => {
-      PubSub.publish(TOPIC);
+      PubSub.publish(FIRST_TOPIC);
+      PubSub.publish(SECOND_TOPIC);
     });
   }
 

@@ -5,6 +5,7 @@ const ListManager = (function () {
   const _lists = [];
 
   function init() {
+    loadList();
     addList();
     deleteList();
     fetchList();
@@ -17,22 +18,37 @@ const ListManager = (function () {
     fetchSearchedTodos();
   }
 
+  function loadList() {
+    const TOPIC = "fetchedListFromLocalStorage";
+
+    PubSub.subscribe(TOPIC, (msg, data) => {
+      const list = List(data.listName);
+      data.todos.forEach((todo) => {
+        list.addTodo(todo.name, todo.dueDate, todo.priority, todo.notes);
+      });
+      _lists.push(list);
+      const NEW_TOPIC = "renderList";
+      PubSub.publish(NEW_TOPIC, data.listName);
+    });
+  }
+
   function addList() {
     const TOPIC = "listNameValid";
 
     PubSub.subscribe(TOPIC, (msg, name) => {
       const capitalizedListName = capitalizeFirstLetter(name);
       const available = nameIsAvailable(capitalizedListName);
-      let NEW_TOPIC;
 
       if (available) {
         _lists.push(List(capitalizedListName));
-        NEW_TOPIC = "listAdded";
+        const NEW_TOPIC = "listAdded";
+        const SECOND_TOPIC = "renderList";
+        PubSub.publish(NEW_TOPIC, capitalizedListName);
+        PubSub.publish(SECOND_TOPIC, capitalizedListName);
       } else {
-        NEW_TOPIC = "listNameUnavailable";
+        const NEW_TOPIC = "listNameUnavailable";
+        PubSub.publish(NEW_TOPIC, capitalizedListName);
       }
-
-      PubSub.publish(NEW_TOPIC, capitalizedListName);
     });
   }
 

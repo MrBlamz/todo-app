@@ -33,10 +33,10 @@ const DOMHandler = (function () {
     toggleSidebar();
     alertListNameInvalid();
     alertListNameUnavailable();
-    addList();
-    deleteList();
+    renderSidebarListElement();
+    deleteSidebarListElement();
     clearNewListInput();
-    renderList();
+    renderListView();
     setClickedListAsSelected();
     openNewTodoForm();
     closeTodoForm();
@@ -128,8 +128,8 @@ const DOMHandler = (function () {
     });
   }
 
-  function addList() {
-    const TOPIC = "listAdded";
+  function renderSidebarListElement() {
+    const TOPIC = "renderList";
 
     PubSub.subscribe(TOPIC, (msg, name) => {
       const list = createList(name);
@@ -137,7 +137,7 @@ const DOMHandler = (function () {
     });
   }
 
-  function deleteList() {
+  function deleteSidebarListElement() {
     const TOPIC = "listDeleted";
 
     PubSub.subscribe(TOPIC, (msg, data) => {
@@ -159,7 +159,7 @@ const DOMHandler = (function () {
     });
   }
 
-  function renderList() {
+  function renderListView() {
     const TOPIC = "listFound";
 
     PubSub.subscribe(TOPIC, (msg, list) => {
