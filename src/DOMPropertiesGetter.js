@@ -49,11 +49,11 @@ const DOMPropertiesGetter = (function () {
   }
 
   function getDeletedListName() {
-    const TOPIC = "deleteListBtnClicked";
+    const TOPIC = "listDeletedAnimationEnded";
 
     PubSub.subscribe(TOPIC, (msg, event) => {
-      const listName = event.target.previousSibling.textContent;
-      const listElement = event.target.parentElement;
+      const listName = event.target.querySelector(".list-name").textContent;
+      const listElement = event.target;
       const NEW_TOPIC = "deleteList";
       PubSub.publish(NEW_TOPIC, { listName, listElement });
     });

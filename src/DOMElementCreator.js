@@ -1,6 +1,6 @@
-export const createList = function (name) {
+export const createList = function (name, animationClass = "") {
   const list = document.createElement("div");
-  list.classList.add("list");
+  list.className = `list ${animationClass}`;
 
   const nameElement = document.createElement("p");
   nameElement.classList.add("list-name");

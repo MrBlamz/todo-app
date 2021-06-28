@@ -20,6 +20,7 @@ const EventListener = (function () {
     toggleSidebarBtnClicked();
     newListNameInputted();
     deleteListBtnClicked();
+    listDeletedAnimationEnded();
     listClicked();
     // List View
     openNewTodoFormBtnClicked();
@@ -92,6 +93,21 @@ const EventListener = (function () {
       const isButton = isDesiredElement(event.target, "delete-list-btn");
 
       if (isButton) {
+        PubSub.publish(TOPIC, event);
+      }
+    });
+  }
+
+  function listDeletedAnimationEnded() {
+    const TOPIC = "listDeletedAnimationEnded";
+
+    listsContainer.addEventListener("animationend", (event) => {
+      const isDeletedList = isDesiredElement(
+        event.target,
+        "animate__bounceOut"
+      );
+
+      if (isDeletedList) {
         PubSub.publish(TOPIC, event);
       }
     });

@@ -46,6 +46,7 @@ const DOMHandler = (function () {
     alertTodoNameUnavailable();
     renderTodoOverview();
     closeTodoOverview();
+    triggerListDeleteAnimation();
     triggerTodoDeleteAnimation();
     triggerTodoCompleteAnimation();
     deleteTodo();
@@ -133,7 +134,7 @@ const DOMHandler = (function () {
     const TOPIC = "renderList";
 
     PubSub.subscribe(TOPIC, (msg, name) => {
-      const list = createList(name);
+      const list = createList(name, "animate__animated animate__jackInTheBox");
       listsContainer.appendChild(list);
     });
   }
@@ -276,6 +277,16 @@ const DOMHandler = (function () {
     PubSub.subscribe(TOPIC, () => {
       blurBackground();
       toggleElementClass(todoOverviewContainer, "active");
+    });
+  }
+
+  function triggerListDeleteAnimation() {
+    const TOPIC = "deleteListBtnClicked";
+
+    PubSub.subscribe(TOPIC, (msg, event) => {
+      const todo = event.target.parentElement;
+      removeElementClass(todo, "animate__jackInTheBox");
+      addElementClass(todo, "animate__bounceOut");
     });
   }
 
