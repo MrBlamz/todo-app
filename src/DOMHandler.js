@@ -60,7 +60,7 @@ const DOMHandler = (function () {
     PubSub.subscribe(TOPIC, (msg, lists) => {
       clearTodoContainer();
       updateListViewHeader("fas fa-home", "Home");
-      toggleElementClass(openNewTodoFormBtnContainer, "disabled");
+      addElementClass(openNewTodoFormBtnContainer, "disabled");
 
       lists.forEach((list) => {
         list.getTodos().forEach((todo) => {
