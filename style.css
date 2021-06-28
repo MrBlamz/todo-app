@@ -402,12 +402,15 @@ i {
 .todo-form {
   position: relative;
   width: 30%;
+  height: 95%;
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
   padding: 1rem;
   border: 1px solid var(--main-color);
   border-radius: 10px;
   background-color: #fff;
+  z-index: 1000;
 }
 
 .todo-form .todo-form-close-btn {
@@ -596,7 +599,6 @@ i {
 
   .todo-form {
     width: 95%;
-    z-index: 1000;
   }
 
   .todo-form .todo-form-close-btn {
@@ -694,7 +696,5 @@ i {
 
   .todo-form {
     width: 95%;
-    height: 95%;
-    z-index: 1000;
   }
 }
