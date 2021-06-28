@@ -46,7 +46,8 @@ const DOMHandler = (function () {
     alertTodoNameUnavailable();
     renderTodoOverview();
     closeTodoOverview();
-    toggleTodoCompleted();
+    triggerTodoDeleteAnimation();
+    triggerTodoCompleteAnimation();
     deleteTodo();
     openEditTodoForm();
     editTodo();
@@ -278,7 +279,17 @@ const DOMHandler = (function () {
     });
   }
 
-  function toggleTodoCompleted() {
+  function triggerTodoDeleteAnimation() {
+    const TOPIC = "deleteTodoBtnClicked";
+
+    PubSub.subscribe(TOPIC, (msg, event) => {
+      const todo = event.target.parentElement.parentElement;
+      addElementClass(todo, "animate__animated");
+      addElementClass(todo, "animate__fadeOutRight");
+    });
+  }
+
+  function triggerTodoCompleteAnimation() {
     const TOPIC = "todoCheckboxClicked";
 
     PubSub.subscribe(TOPIC, (msg, event) => {

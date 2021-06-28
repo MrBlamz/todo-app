@@ -19,7 +19,7 @@ const DOMPropertiesGetter = (function () {
     getClickedListName();
     getTodoFormValue();
     getClickedTodoName();
-    getDeletedTodoName();
+    getDeletedTodo();
     getTodoInfoToBeEdited();
     getCompletedTodo();
   }
@@ -110,11 +110,11 @@ const DOMPropertiesGetter = (function () {
     });
   }
 
-  function getDeletedTodoName() {
-    const TOPIC = "deleteTodoBtnClicked";
+  function getDeletedTodo() {
+    const TOPIC = "completedTodoDeletionAnimation";
 
     PubSub.subscribe(TOPIC, (msg, event) => {
-      const todoElement = event.target.parentElement.parentElement;
+      const todoElement = event.target;
       const listName = todoElement.getAttribute("data-list");
       const todoName = todoElement.querySelector(".todo-name").textContent;
       const NEW_TOPIC = "deleteTodo";

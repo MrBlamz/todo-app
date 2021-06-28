@@ -30,7 +30,8 @@ const EventListener = (function () {
     todoCompletedCheckboxClicked();
     editTodoBtnClicked();
     deleteTodoBtnClicked();
-    completedTodoAnimationEnded();
+    todoDeletedAnimationEnded();
+    todoCompletedAnimationEnded();
   }
 
   function pageLoaded() {
@@ -199,11 +200,30 @@ const EventListener = (function () {
     });
   }
 
-  function completedTodoAnimationEnded() {
+  function todoDeletedAnimationEnded() {
+    const TOPIC = "completedTodoDeletionAnimation";
+
+    todoContainer.addEventListener("animationend", (event) => {
+      const isDeletedTodo = isDesiredElement(
+        event.target,
+        "animate__fadeOutRight"
+      );
+
+      if (isDeletedTodo) {
+        PubSub.publish(TOPIC, event);
+      }
+    });
+  }
+
+  function todoCompletedAnimationEnded() {
     const TOPIC = "completedTodoAnimationEnded";
 
     todoContainer.addEventListener("animationend", (event) => {
-      PubSub.publish(TOPIC, event);
+      const isCompletedTodo = isDesiredElement(event.target, "animate__hinge");
+
+      if (isCompletedTodo) {
+        PubSub.publish(TOPIC, event);
+      }
     });
   }
 
