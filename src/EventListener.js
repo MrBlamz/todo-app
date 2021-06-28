@@ -10,11 +10,13 @@ import {
   todoOverviewCloseBtn,
   searchBarSubmitBtn,
   searchBar,
+  homeBtn,
 } from "./DOMElements";
 
 const EventListener = (function () {
   function init() {
     pageLoaded();
+    homeBtnClicked();
     searchBarInputSubmitted();
     // Sidebar
     toggleSidebarBtnClicked();
@@ -42,6 +44,14 @@ const EventListener = (function () {
     window.addEventListener("DOMContentLoaded", () => {
       PubSub.publish(FIRST_TOPIC);
       PubSub.publish(SECOND_TOPIC);
+    });
+  }
+
+  function homeBtnClicked() {
+    const TOPIC = "fetchAllLists";
+
+    homeBtn.addEventListener("click", () => {
+      PubSub.publish(TOPIC);
     });
   }
 

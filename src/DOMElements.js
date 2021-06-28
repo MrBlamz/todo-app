@@ -1,5 +1,6 @@
 export const contentContainer = document.querySelector(".content");
 export const topBar = document.querySelector(".top-bar");
+export const homeBtn = document.querySelector(".home-btn");
 export const searchBarContainer = document.querySelector(
   ".search-bar-container"
 );
