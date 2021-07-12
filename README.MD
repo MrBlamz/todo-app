@@ -2,7 +2,7 @@
 
 Web app to track tasks.
 
-## Tecnologies Used
+## Technologies Used
 
 - HTML
 - CSS
